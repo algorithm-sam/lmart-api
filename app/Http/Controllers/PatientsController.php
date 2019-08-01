@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Doctor;
+use App\Models\Complaint;
 
 class PatientsController extends Controller
 {
@@ -70,5 +71,27 @@ class PatientsController extends Controller
         }
     }
 
+
+    public function complain(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'complaint' => 'required|min:6'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all()], 422);
+        }
+
+        $user = $request->user();
+
+        $patient = $user->isPatient();
+
+        if (!$patient) {
+            return response()->json(['status' => 'error', 'message' => 'Only Patients Can Lay Complaints'], 400);
+        }
+        $complain = new Complaint(['complaint' => $request->complaint]);
+
+        $patient->complaints()->save($complain);
+        return response()->json(['status' => 'success', 'message' => 'Successfully laid complaint', 'data' => $patient->complaints()->without('patient')->latest()->first()], 201);
+    }
     //
 }

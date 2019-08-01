@@ -16,7 +16,7 @@ class Patient extends Model
         'user_id',
     ];
 
-    protected $with = ['user',];
+    protected $with = ['user', 'complaints'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -39,5 +39,10 @@ class Patient extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function complaints()
+    {
+        return $this->hasMany(Complaint::class);
     }
 }

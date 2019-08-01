@@ -7,6 +7,8 @@ use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use App\Models\Patient;
+use App\Models\Doctor;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -61,5 +63,26 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         } else {
             return $this->hasRole($roles);
         }
+    }
+
+    public function isPatient()
+    {
+        if ($this->hasRole('patient')) {
+            return Patient::where('user_id', $this->id)->first();
+        }
+        return false;
+    }
+
+    public function isDoctor()
+    {
+        if ($this->hasRole('doctor')) {
+            return Doctor::where('user_id', $this->id)->first();
+        }
+        return false;
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
     }
 }

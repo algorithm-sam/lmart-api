@@ -106,7 +106,7 @@ $router->group(['prefix' => 'relative', 'middleware' => 'roles:relative'], funct
 
 
 // Patient's Route..
-$router->group(['prefix' => 'patient', 'middleware' => 'patient'], function () use ($router) {
+$router->group(['prefix' => 'patient', 'middleware' => 'roles:patient'], function () use ($router) {
 
     // Patient Functions
 
@@ -116,9 +116,9 @@ $router->group(['prefix' => 'patient', 'middleware' => 'patient'], function () u
     // Chat with Doctor --Deliberating
     // Video Chat with doctor --Not yet implemented
 
-    $router->get('/', ['uses' => 'PatientsController@index']);
+    // $router->get('/', ['uses' => 'PatientsController@index']);
 
-    // Lay Complaint -- Not yet implemented
+    // Lay Complaint -- Done Tested OK
     $router->post('/complaint', ['uses' => 'PatientsController@complain']);
 
     $router->get('/records', ['uses' => 'PatientsController@medicalRecords']);
