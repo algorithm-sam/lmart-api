@@ -13,9 +13,8 @@ class Complaint extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'complaint',
-    ];
+    // 'complaint',
+    protected $guarded = [];
 
     protected $with = ['patient'];
 

@@ -13,9 +13,8 @@ class Diagnosis extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'reason', 'diagnosis', 'complaint_id'
-    ];
+    // 'reason', 'diagnosis', 'complaint_id'
+    protected $guarded = [];
 
     protected $with = ['complaint', 'treatments'];
 

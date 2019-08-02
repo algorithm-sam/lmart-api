@@ -93,8 +93,8 @@ $router->group(['prefix' => 'relative', 'middleware' => 'roles:relative'], funct
 
     // Relative Functions
 
-    // Todo Routes
 
+    // Todo Routes
     $router->get('/{patient}/records', ['uses' => 'PatientsController@medicalRecords']);
     // 2. View Patient Doctor
 

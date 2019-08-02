@@ -13,9 +13,11 @@ class Treatment extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'patient_id', 'prescription', 'diagnosis_id'
-    ];
+    // protected $fillable = [
+    //     'patient_id', 'prescription', 'diagnosis_id'
+    // ];
+
+    protected $guarded = [];
 
     protected $with = ['patient'];
 

@@ -89,7 +89,7 @@ class DoctorsController extends Controller
 
     public function allPatients(Request $request, $doctor = null)
     {
-        if (!$doctor) $doctor = Doctor::FindOrFail($request->user()->id);
+        if (!$doctor) $doctor = Doctor::where('user_id', $request->user()->id)->first();
         else $doctor = Doctor::findOrFail($doctor);
 
         return response()->json(['status' => 'success', 'message' => null, 'data' => $doctor->patients], 200);

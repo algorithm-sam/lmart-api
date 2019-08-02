@@ -93,5 +93,17 @@ class PatientsController extends Controller
         $patient->complaints()->save($complain);
         return response()->json(['status' => 'success', 'message' => 'Successfully laid complaint', 'data' => $patient->complaints()->without('patient')->latest()->first()], 201);
     }
+
+    public function addDiagnoses()
+    {
+        // Implement the add Diagnoses method
+        return "Hi";
+    }
+
+
+    public function fetchDoctor()
+    {
+        // Implement the fetch doctors method
+    }
     //
 }
