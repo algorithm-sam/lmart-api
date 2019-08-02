@@ -128,6 +128,17 @@ class DoctorsController extends Controller
         return response()->json(["status" => "", "message" => "some message"]);
     }
 
+    public function diagnose(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'diagnosis' => 'required',
+            'reason' => 'filled'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all(), 'data' => null], 422);
+        }
+    }
     public function addPatientRelative()
     { }
 }

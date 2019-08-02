@@ -101,6 +101,17 @@ class PatientsController extends Controller
     }
 
 
+    public function complaints(Request $request, $patient)
+    {
+        $doctor = Doctor::where('user_id', $request->user()->id)->first();
+        $patient = $doctor->patients()->where('patient_id', $patient)->first();
+        if (!$patient) {
+            return response()->json(['status' => 'error', 'message' => 'Can\'t diagnose without a valid complaint...', 'data' => null], 400);
+        }
+        return response()->json(['status' => 'success', 'message' => 'Successfully Fetched Complaints', 'data' => $patient->complaints], 201);
+    }
+
+
     public function fetchDoctor()
     {
         // Implement the fetch doctors method

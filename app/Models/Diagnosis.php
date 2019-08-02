@@ -35,7 +35,6 @@ class Diagnosis extends Model
         return $this->belongsTo(Complaint::class);
     }
 
-
     public function treatments()
     {
         return $this->hasMany(Treatment::class);

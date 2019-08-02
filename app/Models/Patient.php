@@ -16,7 +16,7 @@ class Patient extends Model
         'user_id',
     ];
 
-    protected $with = ['user', 'complaints'];
+    protected $with = ['user'];
 
     /**
      * The attributes excluded from the model's JSON form.

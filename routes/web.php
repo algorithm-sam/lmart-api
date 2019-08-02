@@ -78,9 +78,13 @@ $router->group(['prefix' => 'doctor', 'middleware' => 'roles:doctor'], function 
     // view patient medical record
     $router->get('/patients/{patient}/record', ['uses' => 'PatientsController@medicalRecords']);
     // add patient medical record
-    $router->post('/patients/{patient}/diagnoses', ['uses' => 'PatientsController@addDiagnoses']);
+    // $router->post('/patients/{patient}/diagnoses', ['uses' => 'PatientsController@addDiagnoses']);
     // add treatment/diagnoses
     $router->post('patients/{patient}/treatment', ['uses' => 'PatientsController@addTreatment']);
+
+    $router->get('/patients/{patient}/complaints', ['uses' => 'PatientsController@complaints']);
+
+    $router->post('/complaints/{complaint}/diagnose', ['uses' => 'DoctorsController@diagnose']);
 });
 
 

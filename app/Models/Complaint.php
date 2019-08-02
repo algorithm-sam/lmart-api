@@ -34,4 +34,9 @@ class Complaint extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function diagnoses()
+    {
+        return $this->hasMany(Diagnosis::class);
+    }
 }
