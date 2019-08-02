@@ -17,7 +17,7 @@
 
 **Setting up your local environment**
 
-    Make sure you have [composer] (https://getcomposer.org/download)  and [node] (https://nodejs.org/en/download/) installed globally on your local machine
+    Make sure you have [composer](https://getcomposer.org/download)  and [node](https://nodejs.org/en/download/) installed globally on your local machine
 
 **Installing Dependencies**
 Clone this repository to your local work-space using the following command
