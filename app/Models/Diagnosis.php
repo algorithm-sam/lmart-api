@@ -16,7 +16,7 @@ class Diagnosis extends Model
     // 'reason', 'diagnosis', 'complaint_id'
     protected $guarded = [];
 
-    protected $with = ['complaint', 'treatments'];
+    protected $with = ['treatments'];
 
     /**
      * The attributes excluded from the model's JSON form.

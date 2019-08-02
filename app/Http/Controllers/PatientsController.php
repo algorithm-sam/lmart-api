@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Doctor;
 use App\Models\Complaint;
+use App\Models\Patient;
 
 class PatientsController extends Controller
 {
@@ -35,6 +34,10 @@ class PatientsController extends Controller
 
     public function getRelatives(Request $request, Patient $patient)
     {
+        $patient = Patient::Find($patient);
+        if (!$patient) {
+            return response()->json(['data' => null, 'status' => 'error', 'message' => 'Error Retrieving patients data'], 401);
+        }
         return $patient->relative();
     }
 
@@ -109,6 +112,18 @@ class PatientsController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Can\'t diagnose without a valid complaint...', 'data' => null], 400);
         }
         return response()->json(['status' => 'success', 'message' => 'Successfully Fetched Complaints', 'data' => $patient->complaints], 201);
+    }
+
+    public function medicalRecords(Request $request, $patient)
+    {
+        $patient = Patient::Find($patient);
+
+        // $doctor = Doctor::where('user_id', $request->user()->id)->first();
+        // $patient = $doctor->patients()->where('patient_id', $patient)->first();
+        if (!$patient) {
+            return response()->json(['status' => 'error', 'message' => 'Error Retreiving Patient\'s Record', 'data' => null], 400);
+        }
+        return response()->json(['status' => 'success', 'message' => 'Successfully Fetched Complaints', 'data' => $patient->complaints], 200);
     }
 
 

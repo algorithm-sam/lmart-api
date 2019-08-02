@@ -37,7 +37,7 @@ class RelativesController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'message' => 'Enter a valid email', 'data' => null], 422);
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all(), 'data' => null], 422);
         }
 
         $user = User::where('email', $request->relatives_email)->first();

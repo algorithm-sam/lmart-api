@@ -35,12 +35,12 @@ $router->group(['prefix' => 'admin', 'middleware' => 'roles:admin'], function ()
     $router->get('/doctors/{doctor}/patients', ['uses' => 'DoctorsController@allPatients']);
 
 
-    // View Patients --done (Not yet tested);
+    // View Patients --done (tested);
     $router->get('/patients', ['uses' => 'PatientsController@all']);
 
 
-    // View Relatives --done (Not yet tested);
-    $router->get('/patients/{patient}/relatives', ['uses' => 'PatientController@getRelatives']);
+    // View Relatives --done (tested);
+    $router->get('/patients/{patient}/relatives', ['uses' => 'PatientsController@getRelatives']);
 
 
     // view chat history between doctor and client  -- deliberating (Not yet implemented);
@@ -67,7 +67,7 @@ $router->group(['prefix' => 'doctor', 'middleware' => 'roles:doctor'], function 
 
     // Add Relative
 
-    $router->post('/patients/{patient}/relatives', ['uses' => 'RelativesController@store']);
+    $router->post('/patients/{patient}/relatives', ['uses' => 'RelativesController@store']); // Tested OK
 
     // View Relatives
     $router->get('/patients/{patient}/relatives', ['uses' => 'RelativesController@all']);
@@ -76,15 +76,18 @@ $router->group(['prefix' => 'doctor', 'middleware' => 'roles:doctor'], function 
     // Todo Routes
 
     // view patient medical record
-    $router->get('/patients/{patient}/record', ['uses' => 'PatientsController@medicalRecords']);
+    $router->get('/patients/{patient}/record', ['uses' => 'PatientsController@medicalRecords']); // fetch complaint, diagnosis and treatments
     // add patient medical record
     // $router->post('/patients/{patient}/diagnoses', ['uses' => 'PatientsController@addDiagnoses']);
     // add treatment/diagnoses
-    $router->post('patients/{patient}/treatment', ['uses' => 'PatientsController@addTreatment']);
 
-    $router->get('/patients/{patient}/complaints', ['uses' => 'PatientsController@complaints']);
 
-    $router->post('/complaints/{complaint}/diagnose', ['uses' => 'DoctorsController@diagnose']);
+    $router->post('diagnosis/{diagnosis}/treatment', ['uses' => 'DoctorsController@addTreatment']); // Done Tested OK;
+
+    $router->get('/patients/{patient}/complaints', ['uses' => 'PatientsController@complaints']); // Done Tested OK;
+
+
+    $router->post('/complaints/{complaint}/diagnose', ['uses' => 'DoctorsController@diagnose']); // Done Tested Half OK;
 });
 
 
@@ -99,7 +102,7 @@ $router->group(['prefix' => 'relative', 'middleware' => 'roles:relative'], funct
 
 
     // Todo Routes
-    $router->get('/{patient}/records', ['uses' => 'PatientsController@medicalRecords']);
+    $router->get('/patients/{patient}/records', ['uses' => 'PatientsController@medicalRecords']);
     // 2. View Patient Doctor
 
     $router->get('/{patient}/doctor', ['uses' => 'PatientsController@fetchDoctor']);
@@ -116,7 +119,7 @@ $router->group(['prefix' => 'patient', 'middleware' => 'roles:patient'], functio
 
     // View Profile
     // Fetch Medical Record
-    // Lay Complaint --Delibrating
+    // Lay Complaint --Deliberating
     // Chat with Doctor --Deliberating
     // Video Chat with doctor --Not yet implemented
 

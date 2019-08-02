@@ -16,7 +16,7 @@ class Complaint extends Model
     // 'complaint',
     protected $guarded = [];
 
-    protected $with = ['patient'];
+    protected $with = ['patient', 'diagnosis'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -35,7 +35,7 @@ class Complaint extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function diagnoses()
+    public function diagnosis()
     {
         return $this->hasMany(Diagnosis::class);
     }

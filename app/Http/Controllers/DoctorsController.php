@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Role;
 use App\Models\Patient;
+use App\Models\Diagnosis;
+use App\Models\Complaint;
+use App\Models\Treatment;
 
 class DoctorsController extends Controller
 {
@@ -128,17 +131,45 @@ class DoctorsController extends Controller
         return response()->json(["status" => "", "message" => "some message"]);
     }
 
-    public function diagnose(Request $request)
+    public function diagnose(Request $request, $complaint)
     {
         $validator = Validator::make($request->all(), [
-            'diagnosis' => 'required',
-            'reason' => 'filled'
+            "diagnosis" => "required",
+            "reason" => "filled"
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['status' => 'error', 'message' => $validator->errors()->all(), 'data' => null], 422);
+            return response()->json(["status" => "error", "message" => $validator->errors()->all(), "data" => null], 422);
         }
+
+        $complaint = Complaint::Find($complaint);
+        if (!$complaint) {
+            return response()->json(["status" => 'error', 'message' => 'You can\'t diagnose without a valid complaint..', 'data' => null], 400);
+        }
+        // $diagnosis = Diagnosis::create($request->only(['diagnosis', 'reason']));
+
+        $diagnosis = $complaint->diagnosis()->create($request->only(['diagnosis', 'reason']));
+
+        return response()->json(['status' => 'success', 'message' => 'You have successfully diagnosed patient, move on to treatment', 'data' => $diagnosis], 201);
     }
-    public function addPatientRelative()
-    { }
+    public function addTreatment(Request $request, $diagnosis)
+    {
+        $validator = Validator::make($request->all(), [
+            '' => ''
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'message' => $validator->errors()->all(), 'data' => null]);
+        }
+
+        $diagnosis = Diagnosis::Find($diagnosis);
+
+        if (!$diagnosis) {
+            return response()->json(['status' => 'error', 'message' => 'Error fetching the specified diagnosis', 'data' => null]);
+        }
+        // dd($diagnosis->complaint->patient->);
+
+        $treatment = $diagnosis->complaint->patient->treatments()->create(['diagnosis_id' => $diagnosis->id, 'prescription' => $request->prescription]);
+        return response()->json(['status' => 'success', 'message' => 'Successfully Proffered Treatment for the diagnoses', 'data' => $treatment], 201);
+    }
 }
