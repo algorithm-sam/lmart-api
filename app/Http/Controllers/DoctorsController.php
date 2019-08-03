@@ -155,7 +155,8 @@ class DoctorsController extends Controller
     public function addTreatment(Request $request, $diagnosis)
     {
         $validator = Validator::make($request->all(), [
-            '' => ''
+            'prescription' => 'required',
+            'reason' => 'filled'
         ]);
 
         if ($validator->fails()) {
