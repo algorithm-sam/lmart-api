@@ -114,22 +114,31 @@ class PatientsController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Successfully Fetched Complaints', 'data' => $patient->complaints], 201);
     }
 
-    public function medicalRecords(Request $request, $patient)
+    public function medicalRecords(Request $request, $patient = null)
     {
-        $patient = Patient::Find($patient);
+        if (!$patient) {
+            $patient = Patient::where('user_id', $request->user()->id)->first();
+        } else {
+            $patient = Patient::Find($patient);
+        }
 
         // $doctor = Doctor::where('user_id', $request->user()->id)->first();
         // $patient = $doctor->patients()->where('patient_id', $patient)->first();
         if (!$patient) {
             return response()->json(['status' => 'error', 'message' => 'Error Retreiving Patient\'s Record', 'data' => null], 400);
         }
-        return response()->json(['status' => 'success', 'message' => 'Successfully Fetched Complaints', 'data' => $patient->complaints], 200);
+        return response()->json(['status' => 'success', 'message' => 'Successfully Fetched Patient\'s Medical Record', 'data' => $patient->complaints], 200);
     }
 
 
-    public function fetchDoctor()
+    public function fetchDoctor($patient)
     {
+        $patient = Patient::Find($patient);
+        if (!$patient) {
+            return response()->json(['status' => 'error', 'message' => 'Could not find specified patient', 'data' => null], 404);
+        }
         // Implement the fetch doctors method
+        return response()->json(['status' => 'success', 'message' => 'Successfully fetched all doctors associated to patient', 'data' => $patient->doctors], 200);
     }
     //
 }

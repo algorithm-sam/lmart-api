@@ -8,11 +8,11 @@ $router->get('/', function () {
 // Authentication Requests Route. [register,login,logout] -- Completed -- Tested OK
 $router->group(['prefix' => 'auth'], function () use ($router) {
 
-    $router->post('/register', ['uses' => 'AuthController@register']);
-    $router->post('/login', ['uses' => 'AuthController@login']);
+    $router->post('/register', ['uses' => 'AuthController@register']); // Done Tested Ok
+    $router->post('/login', ['uses' => 'AuthController@login']); // Done Tested Ok
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->post('/token/destroy', ['uses' => 'AuthController@logout']);
+        $router->post('/token/destroy', ['uses' => 'AuthController@logout']); //Done Tested Ok
     });
 });
 
@@ -31,25 +31,23 @@ $router->group(['prefix' => 'admin', 'middleware' => 'roles:admin'], function ()
 
     // The Segments Below are yet to be implemented
 
-    // --Done (Not yet tested)
-    $router->get('/doctors/{doctor}/patients', ['uses' => 'DoctorsController@allPatients']);
+
+    $router->get('/doctors/{doctor}/patients', ['uses' => 'DoctorsController@allPatients']); /// Done Tested Ok 
 
 
     // View Patients --done (tested);
-    $router->get('/patients', ['uses' => 'PatientsController@all']);
+    $router->get('/patients', ['uses' => 'PatientsController@all']); // Done Tested Ok
 
 
     // View Relatives --done (tested);
-    $router->get('/patients/{patient}/relatives', ['uses' => 'PatientsController@getRelatives']);
-
-
-    // view chat history between doctor and client  -- deliberating (Not yet implemented);
+    $router->get('/patients/{patient}/relatives', ['uses' => 'PatientsController@getRelatives']);  // Done Tested Ok
 
 });
 
 
 // Doctor's Route
 $router->group(['prefix' => 'doctor', 'middleware' => 'roles:doctor'], function () use ($router) {
+
     // Doctor Functions
 
     // 1. Add Patient
@@ -105,7 +103,7 @@ $router->group(['prefix' => 'relative', 'middleware' => 'roles:relative'], funct
     $router->get('/patients/{patient}/records', ['uses' => 'PatientsController@medicalRecords']);
     // 2. View Patient Doctor
 
-    $router->get('/{patient}/doctor', ['uses' => 'PatientsController@fetchDoctor']);
+    $router->get('/{patient}/doctor', ['uses' => 'PatientsController@fetchDoctor']); // Done not tested;
 });
 
 
@@ -126,7 +124,7 @@ $router->group(['prefix' => 'patient', 'middleware' => 'roles:patient'], functio
     // $router->get('/', ['uses' => 'PatientsController@index']);
 
     // Lay Complaint -- Done Tested OK
-    $router->post('/complaint', ['uses' => 'PatientsController@complain']);
+    $router->post('/complaint', ['uses' => 'PatientsController@complain']); // Done tested Ok;
 
     $router->get('/records', ['uses' => 'PatientsController@medicalRecords']);
 });
