@@ -126,7 +126,7 @@ $router->group(['prefix' => 'patient', 'middleware' => 'roles:patient'], functio
     // Lay Complaint -- Done Tested OK
     $router->post('/complaint', ['uses' => 'PatientsController@complain']); // Done tested Ok;
 
-    $router->get('/records', ['uses' => 'PatientsController@medicalRecords']);
+    $router->get('/records', ['uses' => 'PatientsController@medicalRecords']); // Done Tested Ok;
 });
 
 
